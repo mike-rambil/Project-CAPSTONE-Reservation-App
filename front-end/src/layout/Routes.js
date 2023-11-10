@@ -67,16 +67,16 @@ function Routes() {
         <TableCreate />
       </Route>
 
-      {/* <---------------------------------------- Not Found Handler ----------------------------------------> */}
-
-      <Route>
-        <NotFound />
-      </Route>
-
       {/* <-------------------------------------- Redirect '/' to Dashboard -----------------------------------> */}
 
       <Route exact={true} path='/'>
         <Redirect to={'/dashboard'} />
+      </Route>
+
+      {/* <---------------------------------------- Not Found Handler ----------------------------------------> */}
+
+      <Route>
+        <NotFound />
       </Route>
     </Switch>
   );
