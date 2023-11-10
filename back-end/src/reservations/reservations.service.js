@@ -44,7 +44,6 @@ function create(newReservation) {
   return knex('reservations')
     .insert({
       ...newReservation,
-      status: 'booked',
     })
     .returning('*')
     .then((result) => result[0]);
@@ -56,8 +55,8 @@ async function updateReservation(reservation) {
     first_name,
     last_name,
     mobile_number,
-    reservation_time,
     reservation_date,
+    reservation_time,
     people,
   } = reservation;
   return knex('reservations').where({ reservation_id }).update(

@@ -9,6 +9,7 @@ import {
 
 function ReservationForm({ isEditing = false, date }) {
   const history = useHistory();
+
   const { reservation_id } = useParams();
   const [currentReservation, setCurrentReservation] = useState({
     reservation_id,
@@ -73,20 +74,20 @@ function ReservationForm({ isEditing = false, date }) {
       <h1>{isEditing ? 'Edit Reservation' : 'Create A Reservation'}</h1>
       <ErrorAlert error={error} />
       <form onSubmit={handleSubmit} className='form-group'>
-        <div className='row mb-3'>
+        <div className='row mb-4'>
           <div className='col-4 form-group'>
             <label className='form-label' htmlFor='first_name'>
               First Name
             </label>
             <input
+              name='first_name'
               className='form-control'
               id='first_name'
-              name='first_name'
               type='text'
               onChange={handleChange}
-              required={true}
               placeholder={currentReservation.first_name}
               value={currentReservation.first_name}
+              required={true}
             />
           </div>
           <div className='col-4'>
@@ -94,31 +95,31 @@ function ReservationForm({ isEditing = false, date }) {
               Last Name
             </label>
             <input
-              className='form-control'
               id='last_name'
               name='last_name'
+              className='form-control'
               type='text'
               onChange={handleChange}
-              required={true}
               placeholder={currentReservation.last_name}
               value={currentReservation.last_name}
+              required={true}
             />
           </div>
         </div>
-        <div className='row mb-3'>
+        <div className='row mb-4'>
           <div className='col-4 form-group'>
             <label className='form-label' htmlFor='mobile_number'>
               Mobile Number
             </label>
             <input
-              className='form-control'
               id='mobile_number'
               name='mobile_number'
               type='text'
+              className='form-control'
               onChange={handleChange}
-              required={true}
               placeholder={currentReservation.mobile_number}
               value={currentReservation.mobile_number}
+              required={true}
             />
           </div>
           <div className='col-4 form-group'>
@@ -141,27 +142,27 @@ function ReservationForm({ isEditing = false, date }) {
           <div className='col-4 form-group'>
             <label>Reservation Date</label>
             <input
-              className='form-control'
               id='reservation_date'
               name='reservation_date'
               type='date'
+              className='form-control'
               onChange={handleChange}
-              required={true}
               placeholder={currentReservation.reservation_date}
               value={currentReservation.reservation_date}
+              required={true}
             />
           </div>
           <div className='col-4 form-group'>
             <label>Reservation Time</label>
             <input
-              className='form-control'
               id='reservation_time'
               name='reservation_time'
               type='time'
+              className='form-control'
               onChange={handleChange}
-              required={true}
               placeholder={currentReservation.reservation_time}
               value={currentReservation.reservation_time}
+              required={true}
             />
           </div>
         </div>

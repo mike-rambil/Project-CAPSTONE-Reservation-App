@@ -25,8 +25,8 @@ function hasReservationIdProperty(req, res, next) {
 }
 
 function hasTableName(req, res, next) {
-  const name = req.body.data.table_name;
-  if (name) {
+  const { table_name } = req.body.data;
+  if (table_name) {
     return next();
   }
   next({
@@ -36,8 +36,8 @@ function hasTableName(req, res, next) {
 }
 
 function validTableName(req, res, next) {
-  const tableName = req.body.data.table_name;
-  if (tableName.length >= 2) {
+  const { table_name } = req.body.data;
+  if (table_name.length >= 2) {
     return next();
   }
   next({
@@ -47,7 +47,7 @@ function validTableName(req, res, next) {
 }
 
 function hasValidTableCapacity(req, res, next) {
-  const capacity = req.body.data.capacity;
+  const { capacity } = req.body.data;
   if (capacity >= 1) {
     return next();
   }
@@ -100,7 +100,7 @@ async function reservationExists(req, res, next) {
 }
 
 async function tableExists(req, res, next) {
-  const table_id = req.params.table_id;
+  const { table_id } = req.params;
   const table = await service.readTable(table_id);
   if (table) {
     res.locals.table = table;
@@ -126,7 +126,7 @@ async function reservationSeated(req, res, next) {
 }
 
 function tableOccupiedChecker(req, res, next) {
-  const table = res.locals.table;
+  const { table } = res.locals;
   if (!table.reservation_id) {
     return next();
   }
@@ -137,7 +137,7 @@ function tableOccupiedChecker(req, res, next) {
 }
 
 function tableOccupiedCheckerForOccupiedField(req, res, next) {
-  const table = res.locals.table;
+  const { table } = res.locals;
   if (table.table_status === 'occupied') {
     return next();
   }
@@ -185,7 +185,7 @@ async function updateSeatRes(req, res) {
 }
 
 async function destroy(req, res) {
-  const table = res.locals.table;
+  const { table } = res.locals;
   await service.removeTable(table.table_id, table.reservation_id);
   const data = await service.list();
   res.json({ data });

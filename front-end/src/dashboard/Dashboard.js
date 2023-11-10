@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import ReservationTable from '../components/reservations/ReservationTable';
-import TableDetail from '../components/tables/TableDetail';
+import TableList from '../components/tables/TableList';
 import ErrorAlert from '../layout/ErrorAlert';
 import { listReservations, listTables } from '../utils/api';
 import { next, previous } from '../utils/date-time';
@@ -162,7 +162,7 @@ function Dashboard({ date }) {
           </thead>
           <tbody>
             {tables.map((table) => (
-              <TableDetail key={table.table_id} table={table} />
+              <TableList key={table.table_id} table={table} />
             ))}
           </tbody>
         </table>

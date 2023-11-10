@@ -4,63 +4,73 @@ import ErrorAlert from '../../layout/ErrorAlert';
 import { listTables, updateSeat } from '../../utils/api';
 
 function ReservationSeat() {
+  const [tables, setTables] = useState([]);
+  const [error, setError] = useState(null);
+  const [data, setTable] = useState({});
+
   const history = useHistory();
   const { reservation_id } = useParams();
 
-  const [tables, setTables] = useState([]);
-
-  const [tableFormData, setTableFormData] = useState({});
-  const [error, setError] = useState(null);
-
   useEffect(() => {
-    const abortController = new AbortController();
-    setError(null);
-    listTables().then(setTables).catch(setError);
+    const fetchData = async () => {
+      const abortController = new AbortController();
 
-    return () => abortController.abort();
+      try {
+        setError(null);
+        const tablesData = await listTables();
+        setTables(tablesData);
+      } catch (err) {
+        setError(err);
+      } finally {
+        abortController.abort();
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const tableObj = JSON.parse(tableFormData);
-    updateSeat(tableObj.table_id, reservation_id)
-      .then((response) => {
-        const newTables = tables.map((table) => {
-          return table.table_id === response.table_id ? response : table;
-        });
-        setTables(newTables);
-        history.push('/dashboard');
-      })
+    const parsedTableData = JSON.parse(data);
 
-      .catch(setError);
+    try {
+      const response = await updateSeat(
+        parsedTableData.table_id,
+        reservation_id
+      );
+      const tablesDATA = tables.map((table) =>
+        table.table_id === response.table_id ? response : table
+      );
+      setTables(tablesDATA);
+      history.push('/dashboard');
+    } catch (error) {
+      setError(error);
+    }
   };
 
   if (tables) {
     return (
       <>
-        <div className='mb-3'>
-          <h1> Seat The Current Reservation </h1>
+        <div className='mb-4'>
+          <h2> Find table for Current Reservation </h2>
         </div>
-
         <ErrorAlert error={error} />
-
-        <div className='mb-3'>
+        <div className='mb-4'>
           <h3> Current Reservation: {reservation_id} </h3>
         </div>
 
         <form className='form-group' onSubmit={handleSubmit}>
-          <div className='col mb-3'>
+          <div className='col mb-4'>
             <label className='form-label' htmlFor='table_id'>
-              {' '}
-              Select Table{' '}
+              Select Table
             </label>
             <select
+              id='table_id'
               className='form-control'
               name='table_id'
-              id='table_id'
-              onChange={(event) => setTableFormData(event.target.value)}
+              onChange={(event) => setTable(event.target.value)}
             >
-              <option value=''> Table Name - Capacity </option>
+              <option value=''> Table Name </option>
               {tables.map((table) => (
                 <option
                   key={table.table_id}
@@ -77,12 +87,10 @@ function ReservationSeat() {
             onClick={() => history.goBack()}
             className='btn btn-secondary mr-2'
           >
-            {' '}
-            Cancel{' '}
+            Cancel
           </button>
           <button className='btn btn-primary' type='submit'>
-            {' '}
-            Submit{' '}
+            Submit
           </button>
         </form>
       </>
@@ -90,7 +98,7 @@ function ReservationSeat() {
   } else {
     return (
       <div>
-        <h1> No open tables to seat </h1>
+        <h2> No tables left! </h2>
       </div>
     );
   }

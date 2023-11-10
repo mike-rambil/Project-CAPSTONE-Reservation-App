@@ -24,12 +24,13 @@ function Routes() {
 
   // Get Date
   function getDate() {
-    const newDate = query.get('date');
-    if (newDate) {
-      setDate(newDate);
+    const date = query.get('date');
+    if (date) {
+      setDate(date);
     }
   }
 
+  // GEt Date whenever URL/query changes
   useEffect(getDate, [url, query]);
 
   return (

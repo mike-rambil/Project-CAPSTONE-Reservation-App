@@ -44,15 +44,15 @@ function readReservation(reservation_id) {
   return knex('reservations').select('*').where({ reservation_id }).first();
 }
 
+function list() {
+  return knex('tables').select('*').orderBy('table_name');
+}
+
 function findTableViaReservation(reservation_id) {
   return knex('tables')
     .where({ reservation_id })
     .whereExists(knex.select('*').from('tables').where({ reservation_id }))
     .then((result) => result[0]);
-}
-
-function list() {
-  return knex('tables').select('*').orderBy('table_name');
 }
 
 async function updateSeatReservation(reservation_id, table_id) {

@@ -4,11 +4,12 @@ import ErrorAlert from '../../layout/ErrorAlert';
 import { listTables, updateResStatus } from '../../utils/api';
 
 function ReservationTable({ reservations }) {
-  const [reservation, setReservation] = useState(reservations);
-  const [error, setError] = useState(null);
   const history = useHistory();
 
-  const handleCancelRes = async (event) => {
+  const [reservation, setReservation] = useState(reservations);
+  const [error, setError] = useState(null);
+
+  const cancelReservationHandler = async (event) => {
     event.preventDefault();
     setError(null);
 
@@ -49,32 +50,34 @@ function ReservationTable({ reservations }) {
           {reservation.status}
         </td>
         <td>
-          {reservation.status === 'booked' ? (
-            <a href={`/reservations/${reservation.reservation_id}/seat`}>
-              <button className='btn btn-primary'> Seat </button>
-            </a>
-          ) : (
-            <div></div>
-          )}
+          <div>
+            {reservation.status === 'booked' && (
+              <a href={`/reservations/${reservation.reservation_id}/seat`}>
+                <button className='btn btn-primary'> Seat </button>
+              </a>
+            )}{' '}
+          </div>
         </td>
         <td>
-          {reservation.status === 'booked' ? (
-            <a href={`/reservations/${reservation.reservation_id}/edit`}>
-              <button className='btn btn-primary '> Edit </button>
-            </a>
-          ) : (
-            <></>
-          )}
+          <div>
+            {reservation.status === 'booked' && (
+              <a href={`/reservations/${reservation.reservation_id}/edit`}>
+                <button className='btn btn-primary '> Edit </button>
+              </a>
+            )}
+          </div>
         </td>
         <td data-reservation-id-cancel={reservation.reservation_id}>
-          {reservation.status === 'booked' ? (
-            <button className='btn btn-danger ml-2' onClick={handleCancelRes}>
-              {' '}
-              Cancel{' '}
-            </button>
-          ) : (
-            <></>
-          )}
+          <div>
+            {reservation.status === 'booked' && (
+              <button
+                className='btn btn-danger ml-2'
+                onClick={cancelReservationHandler}
+              >
+                Cancel
+              </button>
+            )}
+          </div>
         </td>
       </tr>
     </>

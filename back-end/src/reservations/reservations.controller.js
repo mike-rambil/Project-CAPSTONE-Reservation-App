@@ -77,11 +77,11 @@ function hasMobileNumber(req, res, next) {
   }
   next({
     status: 400,
-    message: 'mobile_number property required.',
+    message: 'mobile_number property is required!',
   });
 }
 
-function validDate(req, res, next) {
+function hasValidDate(req, res, next) {
   const date = req.body.data.reservation_date;
   const valid = Date.parse(date);
 
@@ -128,28 +128,28 @@ function hasReservationTime(req, res, next) {
   }
   next({
     status: 400,
-    message: 'valid reservation_time property required.',
+    message: 'valid reservation_time property is required!',
   });
 }
 
 function hasValidTime(req, res, next) {
-  const regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$/;
-  const reservation_time = req.body.data.reservation_time;
-  const isValid = reservation_time.match(regex);
+  const timeMatcherRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$/;
+  const { reservation_time } = req.body.data;
+  const isValid = reservation_time.match(timeMatcherRegex);
   if (isValid) {
     return next();
   }
   next({
     status: 400,
-    message: 'reservation_time must have valid time.',
+    message: 'reservation_time must have valid time!',
   });
 }
 
 function reservationDuringHours(req, res, next) {
-  const time = req.body.data.reservation_time;
+  const { reservation_time } = req.body.data;
   const open = '10:30';
   const close = '21:30';
-  if (time >= open && time <= close) {
+  if (reservation_time >= open && reservation_time <= close) {
     return next();
   }
   next({
@@ -166,7 +166,7 @@ function hasPeople(req, res, next) {
   }
   next({
     status: 400,
-    message: 'valid people property required',
+    message: 'valid people property required!',
   });
 }
 
@@ -244,7 +244,7 @@ module.exports = {
     hasReservationDate,
     hasMobileNumber,
     hasValidStatus,
-    validDate,
+    hasValidDate,
     hasReservationTime,
     tuesdayChecker,
     reservationDuringHours,
@@ -259,7 +259,7 @@ module.exports = {
     hasLastName,
     hasMobileNumber,
     hasReservationDate,
-    validDate,
+    hasValidDate,
     hasValidStatus,
     tuesdayChecker,
     hasReservationTime,
