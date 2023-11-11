@@ -65,7 +65,6 @@ function TableCreate() {
               onChange={handleChange}
               required={true}
             />
-            <h2 className='form-text'> Enter Table Name </h2>
           </div>
           <div className='col-4 form-group'>
             <label className='form-label' htmlFor='capacity'>
@@ -81,7 +80,6 @@ function TableCreate() {
               value={table.capacity}
               required={true}
             />
-            <p className='form-text '> Enter Table Capacity </p>
           </div>
         </div>
         <button

@@ -60,8 +60,8 @@ function ReservationSearch() {
               <th> Reservation Status </th>
             </thead>
             <tbody>
-              {reservations.map((reservation) => (
-                <ReservationTable reservations={reservation} />
+              {reservations.map((reservation, index) => (
+                <ReservationTable reservations={reservation} key={index} />
               ))}
             </tbody>
           </table>
