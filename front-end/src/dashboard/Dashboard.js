@@ -127,7 +127,7 @@ function Dashboard({ date }) {
               <th> ID </th>
               <th> First Name </th>
               <th> Last Name </th>
-              <th> Party Size </th>
+              <th> No of People </th>
               <th> Phone Number </th>
               <th> Date </th>
               <th> Time </th>
