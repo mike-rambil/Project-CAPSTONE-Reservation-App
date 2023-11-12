@@ -40,7 +40,7 @@ function ReservationSearch() {
           />
           <div>
             <button type='submit' className='btn btn-primary'>
-              find{' '}
+              Search
             </button>
           </div>
         </form>
