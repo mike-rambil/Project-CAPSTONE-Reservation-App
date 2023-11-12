@@ -68,7 +68,7 @@ function ReservationSearch() {
         </div>
       ) : (
         <>
-          <small>Error Occurred!</small>
+          <small>Search Results or Errors Occur here!</small>
           <p className='alert alert-danger'> {error} </p>
         </>
       )}
