@@ -92,6 +92,9 @@ function Dashboard({ date }) {
 
       <div className='d-md-flex mb-4'>
         <div className='row mb-4'>
+          <h3 className='ml-3'>
+            Reservations Date: <strong> {currentDate}</strong>{' '}
+          </h3>
           <div>
             <button
               onClick={handleLastDaySubmit}
